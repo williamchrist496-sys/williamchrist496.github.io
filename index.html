@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Sports Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        @media(min-width: 768px) {
+            .container { grid-template-columns: 1fr 1fr; }
+        }
+        .section {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: #fff;
+        }
+        .game-card {
+            background: #252525;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .team { font-weight: bold; }
+        .score { color: #00ff88; font-variant-numeric: tabular-nums; }
+        .status { font-size: 0.85em; color: #aaa; text-align: right; }
+        .news-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 10px;
+        }
+        .news-item a {
+            color: #38b6ff;
+            text-decoration: none;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .news-item a:hover { text-decoration: underline; }
+        .news-item p { margin: 0; font-size: 0.9em; color: #bbb; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- SCORES COLUMN -->
+        <div class="section">
+            <h2>Live Scores (MLB)</h2>
+            <div id="scores-container">Loading scores...</div>
+        </div>
+
+        <!-- NEWS COLUMN -->
+        <div class="section">
+            <h2>Latest Sports News</h2>
+            <div id="news-container">Loading news...</div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch Live Scores from ESPN's Open API
+        async function fetchScores() {
+            const container = document.getElementById('scores-container');
+            try {
+                // Changing 'mlb' to 'nba' or 'nfl' in the URL changes the sport
+                const response = await fetch('https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard');
+                const data = await response.json();
+                
+                let html = '';
+                if (!data.events || data.events.length === 0) {
+                    container.innerHTML = '<p>No games scheduled today.</p>';
+                    return;
+                }
+
+                data.events.forEach(event => {
+                    const competitor1 = event.competitions[0].competitors[0];
+                    const competitor2 = event.competitions[0].competitors[1];
+                    const status = event.status.type.detail;
+
+                    html += `
+                        <div class="game-card">
+                            <div>
+                                <div class="team">${competitor2.team.displayName}: <span class="score">${competitor2.score}</span></div>
+                                <div class="team">${competitor1.team.displayName}: <span class="score">${competitor1.score}</span></div>
+                            </div>
+                            <div class="status">${status}</div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (error) {
+                container.innerHTML = '<p>Error loading scores.</p>';
+            }
+        }
+
+        // Fetch Live News via an open RSS-to-JSON converter
+        async function fetchNews() {
+            const container = document.getElementById('news-container');
+            try {
+                // Pulls the main ESPN RSS feed and converts it to usable JSON
+                const rssUrl = encodeURIComponent('https://www.espn.com/espn/rss/news');
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`);
+                const data = await response.json();
+
+                let html = '';
+                if (!data.items || data.items.length === 0) {
+                    container.innerHTML = '<p>No news available.</p>';
+                    return;
+                }
+
+                // Display the top 8 headlines
+                data.items.slice(0, 8).forEach(item => {
+                    html += `
+                        <div class="news-item">
+                            <a href="${item.link}" target="_blank">${item.title}</a>
+                            <p>${item.description || ''}</p>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (error) {
+                container.innerHTML = '<p>Error loading news.</p>';
+            }
+        }
+
+        // Run on load
+        fetchScores();
+        fetchNews();
+
+        // Refresh scores every 60 seconds
+        setInterval(fetchScores, 60000);
+    </script>
+</body>
+</html>
