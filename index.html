@@ -13,7 +13,7 @@
             --text-main: #ffffff;
             --text-muted: #8a99ad;
             --border: #242f41;
-            --danger: #ff4a4a;
+            --modal-overlay: rgba(5, 7, 10, 0.85);
         }
 
         body {
@@ -25,6 +25,7 @@
             padding-bottom: 60px;
         }
 
+        /* Top Header Navigation */
         .app-header {
             background-color: var(--bg-nav);
             padding: 15px 20px;
@@ -38,7 +39,7 @@
         }
 
         .app-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             background: linear-gradient(90deg, #fff, var(--text-muted));
@@ -55,18 +56,19 @@
             font-weight: 600;
         }
 
+        /* Dashboard Architecture Grid Layout */
         .app-layout {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 1600px;
-            margin: 20px auto;
-            padding: 0 15px;
+            gap: 25px;
+            max-width: 1400px;
+            margin: 25px auto;
+            padding: 0 20px;
         }
 
-        @media(min-width: 1024px) {
+        @media(min-width: 992px) {
             .app-layout {
-                grid-template-columns: 1.2fr 1fr;
+                grid-template-columns: 1.6fr 1fr;
             }
         }
 
@@ -85,16 +87,18 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
             font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         .league-btn.active {
             background-color: var(--bg-card);
             color: var(--accent);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .filter-bar {
@@ -125,7 +129,7 @@
             border-radius: 16px;
             padding: 20px;
             border: 1px solid var(--border);
-            margin-bottom: 20px;
+            align-self: start;
         }
 
         .panel-title {
@@ -133,8 +137,11 @@
             font-weight: 700;
             margin-top: 0;
             margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
         }
 
+        /* Responsive Score Cards */
         .scores-grid {
             display: flex;
             flex-direction: column;
@@ -145,101 +152,251 @@
             background-color: var(--bg-nav);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 15px;
+            padding: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s, transform 0.2s;
         }
 
         .game-card:hover {
             border-color: var(--accent);
-        }
-
-        .game-card.selected {
-            border-color: var(--accent);
-            background-color: rgba(0, 255, 136, 0.03);
+            transform: translateY(-1px);
         }
 
         .teams-col {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .team-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-right: 20px;
+            padding-right: 15px;
         }
 
         .team-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .team-logo {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
         }
 
-        .team-name { font-weight: 600; font-size: 0.95rem; }
-        .team-score { font-size: 1.2rem; font-weight: 800; }
-        .status-col { width: 100px; text-align: right; border-left: 1px solid var(--border); padding-left: 10px; }
-        .status-text { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .game-card.live .status-text { color: var(--accent); }
+        .team-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
 
-        /* LIVE DETAILED STAT BOARD LAYOUT */
+        .team-record {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 6px;
+        }
+
+        .team-score {
+            font-size: 1.3rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .game-card.live .team-score {
+            color: var(--accent);
+        }
+
+        .status-col {
+            width: 110px;
+            text-align: right;
+            border-left: 1px solid var(--border);
+            padding-left: 12px;
+        }
+
+        .status-text {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.2;
+            display: block;
+        }
+
+        .game-card.live .status-text {
+            color: var(--accent);
+        }
+
+        /* COMPLEX FULL-SCREEN LIVE OVERLAY HUB */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--modal-overlay);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 700px;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--accent);
+        }
+
         .stat-board-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: var(--bg-nav);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
             border: 1px solid var(--border);
         }
-        .board-team { text-align: center; flex: 1; }
-        .board-team img { width: 45px; height: 45px; }
-        .board-team-name { font-size: 0.9rem; font-weight: 700; margin-top: 5px; }
-        .board-center-score { font-size: 1.8rem; font-weight: 900; text-align: center; padding: 0 15px; }
-        
+
+        .board-team {
+            text-align: center;
+            flex: 1;
+        }
+
+        .board-team img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .board-team-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .board-center-score {
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-align: center;
+            padding: 0 20px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .board-status-badge {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 20px 0 10px 0;
+            letter-spacing: 0.5px;
+        }
+
         .stat-row-data {
             display: flex;
             justify-content: space-between;
-            padding: 8px 5px;
-            border-bottom: 1px solid #1e2530;
-            font-size: 0.9rem;
-        }
-        .stat-label { color: var(--text-muted); font-weight: 500; }
-        .play-by-play-box {
-            background: #0b0e11;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
-            font-size: 0.88rem;
-            line-height: 1.4;
-            margin-top: 10px;
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
         }
 
-        .news-card { border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 12px; }
-        .news-link { color: var(--text-main); text-decoration: none; font-weight: 600; display: block; margin-bottom: 4px; font-size: 0.95rem;}
-        .news-link:hover { color: var(--accent); }
-        .news-desc { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
-        .empty-state { text-align: center; color: var(--text-muted); padding: 20px 0; font-size: 0.9rem; }
+        .stat-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .play-by-play-box {
+            background: #0b0e11;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* News Cards formatting */
+        .news-card {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 14px;
+            margin-bottom: 14px;
+        }
+
+        .news-card:last-child {
+            border: none;
+            margin-bottom: 0;
+        }
+
+        .news-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-link:hover {
+            color: var(--accent);
+        }
+
+        .news-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 30px 0;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
     <header class="app-header">
         <div class="app-title">PRO SPORTS HQ</div>
-        <div class="refresh-indicator" id="refresh-time">Syncing System Live</div>
+        <div class="refresh-indicator" id="refresh-time">System Connected</div>
     </header>
 
     <main class="app-layout">
@@ -252,32 +409,29 @@
             </nav>
 
             <div class="filter-bar">
-                <button class="filter-chip active" onclick="setFilter('all', this)">All Slates</button>
-                <button class="filter-chip" onclick="setFilter('live', this)">Live Matchups</button>
-                <button class="filter-chip" onclick="setFilter('final', this)">Completed</button>
+                <button class="filter-chip active" onclick="setFilter('all', this)">All Games</button>
+                <button class="filter-chip" onclick="setFilter('live', this)">Live Only</button>
+                <button class="filter-chip" onclick="setFilter('final', this)">Finished</button>
             </div>
 
             <div class="panel">
-                <div class="panel-title">Today's Schedule</div>
-                <div class="scores-grid" id="scores-target">Loading real-time feeds...</div>
+                <div class="panel-title">Game Scoreboard</div>
+                <div class="scores-grid" id="scores-target">Loading sports array data...</div>
             </div>
         </div>
 
-        <div>
-            <div class="panel" id="match-tracker-panel" style="display: none;">
-                <div class="panel-title" style="display:flex; justify-content:space-between;">
-                    <span>Live Game Centre</span>
-                    <span style="color:var(--accent); font-size:0.8rem; cursor:pointer;" onclick="closeTracker()">✕ Close</span>
-                </div>
-                <div id="tracker-target">Select a game card to stream stat engine telemetry.</div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-title" id="news-title">Top MLB Headlines</div>
-                <div class="news-list" id="news-target">Loading news wire...</div>
-            </div>
+        <div class="panel">
+            <div class="panel-title" id="news-title">Top MLB Headlines</div>
+            <div class="news-list" id="news-target">Loading news headlines...</div>
         </div>
     </main>
+
+    <div class="modal-overlay" id="game-modal">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeTracker()">✕</button>
+            <div id="tracker-target">Initializing Game Matrix...</div>
+        </div>
+    </div>
 
     <script>
         let currentSportPath = 'baseball/mlb';
@@ -312,16 +466,16 @@
                 cachedGames = data.events || [];
                 renderScores();
                 const now = new Date();
-                document.getElementById('refresh-time').innerText = `Live: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+                document.getElementById('refresh-time').innerText = `Live Sync: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
             } catch (e) {
-                document.getElementById('scores-target').innerHTML = '<div class="empty-state">Telemetric sync down.</div>';
+                document.getElementById('scores-target').innerHTML = '<div class="empty-state">Unable to communicate with score engine.</div>';
             }
         }
 
         function renderScores() {
             const target = document.getElementById('scores-target');
             if (cachedGames.length === 0) {
-                target.innerHTML = '<div class="empty-state">No matchups scheduled for today.</div>';
+                target.innerHTML = '<div class="empty-state">No matches scheduled for today.</div>';
                 return;
             }
 
@@ -334,7 +488,7 @@
             });
 
             if (filtered.length === 0) {
-                target.innerHTML = `<div class="empty-state">No games under "${currentFilter}" filter.</div>`;
+                target.innerHTML = `<div class="empty-state">No slates active matching "${currentFilter}".</div>`;
                 return;
             }
 
@@ -343,22 +497,24 @@
                 const home = comp.competitors.find(c => c.homeAway === 'home');
                 const away = comp.competitors.find(c => c.homeAway === 'away');
                 const isLive = event.status.type.state === 'in';
-                const isSelected = event.id === activeGameId ? 'selected' : '';
+                
+                const homeRecord = home.records && home.records.length > 0 ? home.records[0].summary : '';
+                const awayRecord = away.records && away.records.length > 0 ? away.records[0].summary : '';
 
                 html += `
-                    <div class="game-card ${isLive ? 'live' : ''} ${isSelected}" onclick="launchGameTracker('${event.id}')">
+                    <div class="game-card ${isLive ? 'live' : ''}" onclick="launchGameTracker('${event.id}')">
                         <div class="teams-col">
                             <div class="team-row">
                                 <div class="team-info">
-                                    <img class="team-logo" src="${away.team.logo || ''}" onerror="this.style.opacity=0">
-                                    <span class="team-name">${away.team.displayName}</span>
+                                    <img class="team-logo" src="${away.team.logo || 'https://a.espncdn.com/images/core/assets/misc/sport-placeholder.png'}">
+                                    <span class="team-name">${away.team.displayName} <span class="team-record">${awayRecord}</span></span>
                                 </div>
                                 <span class="team-score">${away.score}</span>
                             </div>
                             <div class="team-row">
                                 <div class="team-info">
-                                    <img class="team-logo" src="${home.team.logo || ''}" onerror="this.style.opacity=0">
-                                    <span class="team-name">${home.team.displayName}</span>
+                                    <img class="team-logo" src="${home.team.logo || 'https://a.espncdn.com/images/core/assets/misc/sport-placeholder.png'}">
+                                    <span class="team-name">${home.team.displayName} <span class="team-record">${homeRecord}</span></span>
                                 </div>
                                 <span class="team-score">${home.score}</span>
                             </div>
@@ -374,29 +530,25 @@
 
         function closeTracker() {
             activeGameId = null;
-            document.getElementById('match-tracker-panel').style.display = 'none';
+            document.getElementById('game-modal').style.display = 'none';
             if (trackerInterval) clearInterval(trackerInterval);
-            renderScores();
         }
 
         function launchGameTracker(gameId) {
             activeGameId = gameId;
-            document.getElementById('match-tracker-panel').style.display = 'block';
+            document.getElementById('game-modal').style.display = 'flex';
+            document.getElementById('tracker-target').innerHTML = '<div class="empty-state">Pulling deep boxscore data matrix...</div>';
             
-            // Highlight selected card visually
-            renderScores();
-            
-            // Fetch instantly, then spin up loop loop
             loadGameSummary();
             if (trackerInterval) clearInterval(trackerInterval);
-            trackerInterval = setInterval(loadGameSummary, 20000); // refresh panel data every 20s
+            trackerInterval = setInterval(loadGameSummary, 15000); // refresh layout tracking every 15s
         }
 
         async function loadGameSummary() {
             if (!activeGameId) return;
-            const container = document.getElementById('tracker-target');
             try {
-                const response = await fetch(`https://site.web.api.espn.com/apis/site/v2/sports/${currentSportPath}/summary?event=${activeGameId}`);
+                // Fixed endpoint URL routing to site.api instead of site.web to bypass CORS issues
+                const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${currentSportPath}/summary?event=${activeGameId}`);
                 const data = await response.json();
                 
                 const header = data.header;
@@ -404,75 +556,78 @@
                 const home = comp.competitors.find(c => c.homeAway === 'home');
                 const away = comp.competitors.find(c => c.homeAway === 'away');
                 
-                // Build live tracker interface mapping
                 let html = `
                     <div class="stat-board-header">
                         <div class="board-team">
-                            <img src="${away.team.logo || ''}">
-                            <div class="board-team-name">${away.team.abbreviation}</div>
+                            <img src="${away.team.logo || 'https://a.espncdn.com/images/core/assets/misc/sport-placeholder.png'}">
+                            <div class="board-team-name">${away.team.displayName}</div>
                         </div>
                         <div class="board-center-score">
                             <div>${away.score} - ${home.score}</div>
-                            <div style="font-size:0.75rem; color:var(--accent); font-weight:600; margin-top:5px;">${header.status.type.detail}</div>
+                            <div class="board-status-badge">${header.status.type.detail}</div>
                         </div>
                         <div class="board-team">
-                            <img src="${home.team.logo || ''}">
-                            <div class="board-team-name">${home.team.abbreviation}</div>
+                            <img src="${home.team.logo || 'https://a.espncdn.com/images/core/assets/misc/sport-placeholder.png'}">
+                            <div class="board-team-name">${home.team.displayName}</div>
                         </div>
                     </div>
                 `;
 
-                // Add Live Play-By-Play if available
-                if (data.plays && data.plays.length > 0) {
-                    const lastPlay = data.plays[data.plays.length - 1];
+                // Add Live Text Feed Description situational status updates
+                if (data.situation && data.situation.lastPlay) {
                     html += `
-                        <div style="font-weight:700; font-size:0.85rem; margin-bottom:5px; text-transform:uppercase; color:var(--text-muted)">Latest Play</div>
-                        <div class="play-by-day-box">${lastPlay.text}</div>
+                        <div class="stat-section-title">Current Situation / Last Play</div>
+                        <div class="play-by-play-box">${data.situation.lastPlay.text}</div>
+                    `;
+                } else if (data.plays && data.plays.length > 0) {
+                    html += `
+                        <div class="stat-section-title">Last Play Details</div>
+                        <div class="play-by-play-box">${data.plays[data.plays.length - 1].text}</div>
                     `;
                 }
 
-                // Add Box Score Box Team Comparison Matrix
-                if (data.boxscore && data.boxscore.teams) {
-                    html += `<div style="font-weight:700; font-size:0.85rem; margin:15px 0 8px 0; text-transform:uppercase; color:var(--text-muted)">Team Stats Comparison</div>`;
-                    
+                // Complex Data Tables comparison system
+                if (data.boxscore && data.boxscore.teams && data.boxscore.teams.length > 0) {
+                    html += `<div class="stat-section-title">Team Stats Summary</div>`;
                     const teamStats = data.boxscore.teams;
                     const homeStats = teamStats.find(t => t.team.id === home.id);
                     const awayStats = teamStats.find(t => t.team.id === away.id);
                     
-                    if(homeStats && homeStats.statistics && homeStats.statistics.length > 0) {
-                        // dynamic render up to 6 core matching stat elements
-                        for(let i=0; i < Math.min(6, homeStats.statistics.length); i++) {
-                            const label = homeStats.statistics[i].label;
-                            const hVal = homeStats.statistics[i].displayValue;
-                            const aVal = awayStats.statistics[i].displayValue;
+                    if (homeStats && homeStats.statistics && homeStats.statistics.length > 0) {
+                        homeStats.statistics.forEach((stat, idx) => {
+                            const label = stat.label;
+                            const hVal = stat.displayValue;
+                            const aVal = awayStats.statistics[idx] ? awayStats.statistics[idx].displayValue : '-';
                             html += `
                                 <div class="stat-row-data">
-                                    <span style="font-weight:600; width:40px;">${aVal}</span>
+                                    <span style="font-weight:700; width:60px;">${aVal}</span>
                                     <span class="stat-label">${label}</span>
-                                    <span style="font-weight:600; text-align:right; width:40px;">${hVal}</span>
+                                    <span style="font-weight:700; text-align:right; width:60px;">${hVal}</span>
                                 </div>
                             `;
-                        }
+                        });
                     } else {
-                        html += `<div class="empty-state">Stats will compile at tip-off.</div>`;
+                        html += `<div class="empty-state">Stats summary charts will register when live play begins.</div>`;
                     }
+                } else {
+                    html += `<div class="empty-state">Detailed boxscore stats matrix currently unavailable for this game slate.</div>`;
                 }
 
-                // Add Game Metadata (Arena, Broadcast Station Network)
+                // Info Footers metadata tracking
                 if (comp.venue || comp.broadcasts) {
-                    const venue = comp.venue ? comp.venue.fullName : 'N/A';
+                    const venue = comp.venue ? `${comp.venue.fullName} (${comp.venue.address ? comp.venue.address.city : ''})` : 'N/A';
                     const network = comp.broadcasts && comp.broadcasts.length > 0 ? comp.broadcasts[0].media.shortName : 'N/A';
                     html += `
-                        <div style="margin-top:15px; font-size:0.78rem; color:var(--text-muted); line-height:1.5;">
-                            <div>📍 <b>Venue:</b> ${venue}</div>
-                            <div>📺 <b>Network:</b> ${network}</div>
+                        <div style="margin-top:20px; font-size:0.8rem; color:var(--text-muted); line-height:1.6; border-top:1px solid var(--border); padding-top:15px;">
+                            <div>📍 <b>Location Arena:</b> ${venue}</div>
+                            <div>📺 <b>Broadcast Feed:</b> ${network}</div>
                         </div>
                     `;
                 }
 
-                container.innerHTML = html;
+                document.getElementById('tracker-target').innerHTML = html;
             } catch (err) {
-                container.innerHTML = '<div class="empty-state">Telemetric details offline for this slate.</div>';
+                document.getElementById('tracker-target').innerHTML = '<div class="empty-state">Statistical board system is verifying details. Pre-game data is loading.</div>';
             }
         }
 
@@ -484,12 +639,12 @@
                 const data = await response.json();
 
                 if (!data.items || data.items.length === 0) {
-                    target.innerHTML = '<div class="empty-state">No current headlines found.</div>';
+                    target.innerHTML = '<div class="empty-state">No current league wire feeds found.</div>';
                     return;
                 }
 
                 let html = '';
-                data.items.slice(0, 5).forEach(item => {
+                data.items.slice(0, 6).forEach(item => {
                     html += `
                         <div class="news-card">
                             <a class="news-link" href="${item.link}" target="_blank">${item.title}</a>
@@ -499,11 +654,11 @@
                 });
                 target.innerHTML = html;
             } catch (e) {
-                target.innerHTML = '<div class="empty-state">News wire connection reset.</div>';
+                target.innerHTML = '<div class="empty-state">News feed wire connection timed out.</div>';
             }
         }
 
-        // Init
+        // Init loads
         fetchScores();
         fetchNews();
         setInterval(fetchScores, 30000);
