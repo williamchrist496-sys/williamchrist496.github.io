@@ -25,7 +25,6 @@
             padding-bottom: 60px;
         }
 
-        /* Top Header Navigation */
         .app-header {
             background-color: var(--bg-nav);
             padding: 15px 20px;
@@ -56,7 +55,6 @@
             font-weight: 600;
         }
 
-        /* Dashboard Architecture Grid Layout */
         .app-layout {
             display: grid;
             grid-template-columns: 1fr;
@@ -67,9 +65,7 @@
         }
 
         @media(min-width: 992px) {
-            .app-layout {
-                grid-template-columns: 1.6fr 1fr;
-            }
+            .app-layout { grid-template-columns: 1.6fr 1fr; }
         }
 
         .league-selector {
@@ -92,13 +88,12 @@
             font-weight: 700;
             cursor: pointer;
             font-size: 0.9rem;
-            transition: all 0.2s ease;
+            transition: background 0.15s;
         }
 
         .league-btn.active {
             background-color: var(--bg-card);
             color: var(--accent);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .filter-bar {
@@ -141,7 +136,6 @@
             padding-bottom: 10px;
         }
 
-        /* Responsive Score Cards */
         .scores-grid {
             display: flex;
             flex-direction: column;
@@ -157,12 +151,6 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-
-        .game-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-1px);
         }
 
         .teams-col {
@@ -191,53 +179,17 @@
             object-fit: contain;
         }
 
-        .team-name {
-            font-weight: 600;
-            font-size: 1rem;
-        }
+        .team-name { font-weight: 600; font-size: 1rem; }
+        .team-record { font-size: 0.75rem; color: var(--text-muted); margin-left: 6px; }
+        .team-score { font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .game-card.live .team-score { color: var(--accent); }
+        .status-col { width: 110px; text-align: right; border-left: 1px solid var(--border); padding-left: 12px; }
+        .status-text { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; line-height: 1.2; display: block; }
+        .game-card.live .status-text { color: var(--accent); }
 
-        .team-record {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-left: 6px;
-        }
-
-        .team-score {
-            font-size: 1.3rem;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .game-card.live .team-score {
-            color: var(--accent);
-        }
-
-        .status-col {
-            width: 110px;
-            text-align: right;
-            border-left: 1px solid var(--border);
-            padding-left: 12px;
-        }
-
-        .status-text {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            line-height: 1.2;
-            display: block;
-        }
-
-        .game-card.live .status-text {
-            color: var(--accent);
-        }
-
-        /* COMPLEX FULL-SCREEN LIVE OVERLAY HUB */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-color: var(--modal-overlay);
             display: none;
             justify-content: center;
@@ -254,7 +206,6 @@
             max-width: 700px;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             max-height: 85vh;
             overflow-y: auto;
             position: relative;
@@ -262,17 +213,10 @@
 
         .close-modal-btn {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
+            top: 15px; right: 20px;
+            background: none; border: none;
+            color: var(--text-muted); font-size: 1.5rem;
             cursor: pointer;
-        }
-
-        .close-modal-btn:hover {
-            color: var(--accent);
         }
 
         .stat-board-header {
@@ -286,126 +230,38 @@
             border: 1px solid var(--border);
         }
 
-        .board-team {
-            text-align: center;
-            flex: 1;
-        }
+        .board-team { text-align: center; flex: 1; }
+        .board-team img { width: 55px; height: 55px; object-fit: contain; }
+        .board-team-name { font-size: 1rem; font-weight: 700; margin-top: 8px; }
+        .board-center-score { font-size: 2.2rem; font-weight: 900; text-align: center; padding: 0 20px; font-variant-numeric: tabular-nums; }
+        .board-status-badge { font-size: 0.8rem; color: var(--accent); font-weight: 700; margin-top: 6px; text-transform: uppercase; }
+        
+        .stat-section-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin: 20px 0 10px 0; }
+        .stat-row-data { display: flex; justify-content: space-between; padding: 10px 8px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+        .stat-label { color: var(--text-muted); font-weight: 500; }
+        .play-by-play-box { background: #0b0e11; padding: 15px; border-radius: 12px; border-left: 4px solid var(--accent); font-size: 0.9rem; line-height: 1.5; }
 
-        .board-team img {
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
-        }
-
-        .board-team-name {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-top: 8px;
-        }
-
-        .board-center-score {
-            font-size: 2.2rem;
-            font-weight: 900;
-            text-align: center;
-            padding: 0 20px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .board-status-badge {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 700;
-            margin-top: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-section-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin: 20px 0 10px 0;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-row-data {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .play-by-play-box {
-            background: #0b0e11;
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        /* News Cards formatting */
-        .news-card {
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 14px;
-            margin-bottom: 14px;
-        }
-
-        .news-card:last-child {
-            border: none;
-            margin-bottom: 0;
-        }
-
-        .news-link {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 5px;
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-
-        .news-link:hover {
-            color: var(--accent);
-        }
-
-        .news-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin: 0;
-            line-height: 1.4;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 30px 0;
-            font-size: 0.9rem;
-        }
+        .news-card { border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 14px; }
+        .news-link { color: var(--text-main); text-decoration: none; font-weight: 600; display: block; margin-bottom: 5px; font-size: 1rem; }
+        .news-link:hover { color: var(--accent); }
+        .news-desc { font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.4; }
+        .empty-state { text-align: center; color: var(--text-muted); padding: 30px 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <header class="app-header">
         <div class="app-title">PRO SPORTS HQ</div>
-        <div class="refresh-indicator" id="refresh-time">System Connected</div>
+        <div class="refresh-indicator" id="refresh-time">Engine Synced</div>
     </header>
 
     <main class="app-layout">
         <div>
             <nav class="league-selector">
-                <button class="league-btn active" onclick="changeLeague('mlb', 'baseball/mlb', 'https://www.espn.com/espn/rss/mlb/news')">MLB</button>
-                <button class="league-btn" onclick="changeLeague('nba', 'basketball/nba', 'https://www.espn.com/espn/rss/nba/news')">NBA</button>
-                <button class="league-btn" onclick="changeLeague('nfl', 'football/nfl', 'https://www.espn.com/espn/rss/nfl/news')">NFL</button>
-                <button class="league-btn" onclick="changeLeague('nhl', 'hockey/nhl', 'https://www.espn.com/espn/rss/nhl/news')">NHL</button>
+                <button class="league-btn active" id="btn-mlb" onclick="switchLeagueTab('mlb')">MLB</button>
+                <button class="league-btn" id="btn-nba" onclick="switchLeagueTab('nba')">NBA</button>
+                <button class="league-btn" id="btn-nfl" onclick="switchLeagueTab('nfl')">NFL</button>
+                <button class="league-btn" id="btn-nhl" onclick="switchLeagueTab('nhl')">NHL</button>
             </nav>
 
             <div class="filter-bar">
@@ -416,40 +272,75 @@
 
             <div class="panel">
                 <div class="panel-title">Game Scoreboard</div>
-                <div class="scores-grid" id="scores-target">Loading sports array data...</div>
+                <div class="scores-grid" id="scores-target">Pre-loading leagues...</div>
             </div>
         </div>
 
         <div class="panel">
             <div class="panel-title" id="news-title">Top MLB Headlines</div>
-            <div class="news-list" id="news-target">Loading news headlines...</div>
+            <div class="news-list" id="news-target">Pre-loading data wire...</div>
         </div>
     </main>
 
     <div class="modal-overlay" id="game-modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeTracker()">✕</button>
-            <div id="tracker-target">Initializing Game Matrix...</div>
+            <div id="tracker-target">Loading stats...</div>
         </div>
     </div>
 
     <script>
-        let currentSportPath = 'baseball/mlb';
-        let currentRssUrl = 'https://www.espn.com/espn/rss/mlb/news';
+        // Config Paths Mapping
+        const leagues = {
+            mlb: { path: 'baseball/mlb', rss: 'https://www.espn.com/espn/rss/mlb/news', games: [], news: [] },
+            nba: { path: 'basketball/nba', rss: 'https://www.espn.com/espn/rss/nba/news', games: [], news: [] },
+            nfl: { path: 'football/nfl', rss: 'https://www.espn.com/espn/rss/nfl/news', games: [], news: [] },
+            nhl: { path: 'hockey/nhl', rss: 'https://www.espn.com/espn/rss/nhl/news', games: [], news: [] }
+        };
+
+        let currentLeague = 'mlb';
         let currentFilter = 'all';
-        let cachedGames = [];
         let activeGameId = null;
         let trackerInterval = null;
 
-        function changeLeague(leagueId, path, rss) {
-            currentSportPath = path;
-            currentRssUrl = rss;
+        // FAST LOAD MECHANISM: Fetch data for all leagues in parallel right away
+        async function prefetchAllData() {
+            const promises = Object.keys(leagues).map(async (key) => {
+                try {
+                    // Fetch scores
+                    const scoreRes = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${leagues[key].path}/scoreboard`);
+                    const scoreData = await scoreRes.json();
+                    leagues[key].games = scoreData.events || [];
+
+                    // Fetch news
+                    const escapedUrl = encodeURIComponent(leagues[key].rss);
+                    const newsRes = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${escapedUrl}`);
+                    const newsData = await newsRes.json();
+                    leagues[key].news = newsData.items || [];
+                } catch (e) {
+                    console.error(`Pre-loading error on ${key}`);
+                }
+            });
+
+            await Promise.all(promises);
+            
+            // Render the active tab immediately once data is cached
+            renderScores();
+            renderNews();
+            updateTimestamp();
+        }
+
+        function switchLeagueTab(leagueId) {
+            currentLeague = leagueId;
             closeTracker();
+            
             document.querySelectorAll('.league-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            document.getElementById(`btn-${leagueId}`).classList.add('active');
             document.getElementById('news-title').innerText = `Top ${leagueId.toUpperCase()} Headlines`;
-            fetchScores();
-            fetchNews();
+            
+            // INSTANT RENDER FROM CACHE
+            renderScores();
+            renderNews();
         }
 
         function setFilter(type, element) {
@@ -459,28 +350,16 @@
             renderScores();
         }
 
-        async function fetchScores() {
-            try {
-                const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${currentSportPath}/scoreboard`);
-                const data = await response.json();
-                cachedGames = data.events || [];
-                renderScores();
-                const now = new Date();
-                document.getElementById('refresh-time').innerText = `Live Sync: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
-            } catch (e) {
-                document.getElementById('scores-target').innerHTML = '<div class="empty-state">Unable to communicate with score engine.</div>';
-            }
-        }
-
         function renderScores() {
             const target = document.getElementById('scores-target');
-            if (cachedGames.length === 0) {
+            const games = leagues[currentLeague].games;
+
+            if (!games || games.length === 0) {
                 target.innerHTML = '<div class="empty-state">No matches scheduled for today.</div>';
                 return;
             }
 
-            let html = '';
-            const filtered = cachedGames.filter(event => {
+            const filtered = games.filter(event => {
                 const state = event.status.type.state;
                 if (currentFilter === 'live') return state === 'in';
                 if (currentFilter === 'final') return state === 'post';
@@ -492,12 +371,12 @@
                 return;
             }
 
+            let html = '';
             filtered.forEach(event => {
                 const comp = event.competitions[0];
                 const home = comp.competitors.find(c => c.homeAway === 'home');
                 const away = comp.competitors.find(c => c.homeAway === 'away');
                 const isLive = event.status.type.state === 'in';
-                
                 const homeRecord = home.records && home.records.length > 0 ? home.records[0].summary : '';
                 const awayRecord = away.records && away.records.length > 0 ? away.records[0].summary : '';
 
@@ -528,29 +407,47 @@
             target.innerHTML = html;
         }
 
+        function renderNews() {
+            const target = document.getElementById('news-target');
+            const news = leagues[currentLeague].news;
+
+            if (!news || news.length === 0) {
+                target.innerHTML = '<div class="empty-state">No headlines found.</div>';
+                return;
+            }
+
+            let html = '';
+            news.slice(0, 6).forEach(item => {
+                html += `
+                    <div class="news-card">
+                        <a class="news-link" href="${item.link}" target="_blank">${item.title}</a>
+                        <p class="news-desc">${item.description || ''}</p>
+                    </div>
+                `;
+            });
+            target.innerHTML = html;
+        }
+
+        function launchGameTracker(gameId) {
+            activeGameId = gameId;
+            document.getElementById('game-modal').style.display = 'flex';
+            document.getElementById('tracker-target').innerHTML = '<div class="empty-state">Loading boxscore...</div>';
+            loadGameSummary();
+            if (trackerInterval) clearInterval(trackerInterval);
+            trackerInterval = setInterval(loadGameSummary, 15000);
+        }
+
         function closeTracker() {
             activeGameId = null;
             document.getElementById('game-modal').style.display = 'none';
             if (trackerInterval) clearInterval(trackerInterval);
         }
 
-        function launchGameTracker(gameId) {
-            activeGameId = gameId;
-            document.getElementById('game-modal').style.display = 'flex';
-            document.getElementById('tracker-target').innerHTML = '<div class="empty-state">Pulling deep boxscore data matrix...</div>';
-            
-            loadGameSummary();
-            if (trackerInterval) clearInterval(trackerInterval);
-            trackerInterval = setInterval(loadGameSummary, 15000); // refresh layout tracking every 15s
-        }
-
         async function loadGameSummary() {
             if (!activeGameId) return;
             try {
-                // Fixed endpoint URL routing to site.api instead of site.web to bypass CORS issues
-                const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${currentSportPath}/summary?event=${activeGameId}`);
+                const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${leagues[currentLeague].path}/summary?event=${activeGameId}`);
                 const data = await response.json();
-                
                 const header = data.header;
                 const comp = header.competitions[0];
                 const home = comp.competitors.find(c => c.homeAway === 'home');
@@ -573,20 +470,13 @@
                     </div>
                 `;
 
-                // Add Live Text Feed Description situational status updates
                 if (data.situation && data.situation.lastPlay) {
                     html += `
                         <div class="stat-section-title">Current Situation / Last Play</div>
                         <div class="play-by-play-box">${data.situation.lastPlay.text}</div>
                     `;
-                } else if (data.plays && data.plays.length > 0) {
-                    html += `
-                        <div class="stat-section-title">Last Play Details</div>
-                        <div class="play-by-play-box">${data.plays[data.plays.length - 1].text}</div>
-                    `;
                 }
 
-                // Complex Data Tables comparison system
                 if (data.boxscore && data.boxscore.teams && data.boxscore.teams.length > 0) {
                     html += `<div class="stat-section-title">Team Stats Summary</div>`;
                     const teamStats = data.boxscore.teams;
@@ -606,63 +496,36 @@
                                 </div>
                             `;
                         });
-                    } else {
-                        html += `<div class="empty-state">Stats summary charts will register when live play begins.</div>`;
                     }
-                } else {
-                    html += `<div class="empty-state">Detailed boxscore stats matrix currently unavailable for this game slate.</div>`;
-                }
-
-                // Info Footers metadata tracking
-                if (comp.venue || comp.broadcasts) {
-                    const venue = comp.venue ? `${comp.venue.fullName} (${comp.venue.address ? comp.venue.address.city : ''})` : 'N/A';
-                    const network = comp.broadcasts && comp.broadcasts.length > 0 ? comp.broadcasts[0].media.shortName : 'N/A';
-                    html += `
-                        <div style="margin-top:20px; font-size:0.8rem; color:var(--text-muted); line-height:1.6; border-top:1px solid var(--border); padding-top:15px;">
-                            <div>📍 <b>Location Arena:</b> ${venue}</div>
-                            <div>📺 <b>Broadcast Feed:</b> ${network}</div>
-                        </div>
-                    `;
                 }
 
                 document.getElementById('tracker-target').innerHTML = html;
             } catch (err) {
-                document.getElementById('tracker-target').innerHTML = '<div class="empty-state">Statistical board system is verifying details. Pre-game data is loading.</div>';
+                document.getElementById('tracker-target').innerHTML = '<div class="empty-state">Boxscore stats loading...</div>';
             }
         }
 
-        async function fetchNews() {
-            const target = document.getElementById('news-target');
-            try {
-                const escapedUrl = encodeURIComponent(currentRssUrl);
-                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${escapedUrl}`);
-                const data = await response.json();
-
-                if (!data.items || data.items.length === 0) {
-                    target.innerHTML = '<div class="empty-state">No current league wire feeds found.</div>';
-                    return;
-                }
-
-                let html = '';
-                data.items.slice(0, 6).forEach(item => {
-                    html += `
-                        <div class="news-card">
-                            <a class="news-link" href="${item.link}" target="_blank">${item.title}</a>
-                            <p class="news-desc">${item.description || ''}</p>
-                        </div>
-                    `;
-                });
-                target.innerHTML = html;
-            } catch (e) {
-                target.innerHTML = '<div class="empty-state">News feed wire connection timed out.</div>';
-            }
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('refresh-time').innerText = `Live Cache: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
         }
 
-        // Init loads
-        fetchScores();
-        fetchNews();
-        setInterval(fetchScores, 30000);
-        setInterval(fetchNews, 120000);
+        // Silent background update loops (No spinners)
+        async function silentRefresh() {
+            for (const key of Object.keys(leagues)) {
+                try {
+                    const scoreRes = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${leagues[key].path}/scoreboard`);
+                    const scoreData = await scoreRes.json();
+                    leagues[key].games = scoreData.events || [];
+                } catch(e){}
+            }
+            renderScores();
+            updateTimestamp();
+        }
+
+        // Run Engine
+        prefetchAllData();
+        setInterval(silentRefresh, 30000); // Silent refresh updates background data smoothly every 30 seconds
     </script>
 </body>
 </html>
